@@ -1,0 +1,61 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font: 13px Helvetica, Arial;
+    background-color: black;
+    background: repeating-linear-gradient(
+      -45deg,
+      #223,
+      #223 10px,
+      #012 10px,
+      #012 20px
+    );
+}
+
+#scene {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background-color: white;
+    height: 400px;
+    width: 600px;
+    margin-top: -200px;
+    margin-left: -300px;
+    color: white;
+    background-size: cover;
+    overflow: hidden;
+}
+#scene.loading {
+    padding: 30px;
+    color: grey;
+    transition: 2s;
+    font-size: 20pt;
+}
+
+.element {
+    pointer-events: none;
+}
+.element.draggable {
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+#legend {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: 10px;
+    text-align: center;
+    color: rgba(255,255,255,0.7)
+}

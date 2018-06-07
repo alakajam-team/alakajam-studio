@@ -1,0 +1,253 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Alakajam! Studio</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body>
+    <div id="legend">
+    </div>
+    <div id="scene">
+      Loading...
+    </div>
+
+    <script src="jquery-3.3.1.js"></script>
+    <script src="lodash-core.js"></script>
+    <script src="socket.io.dev.js"></script>
+    <script src="interact.js"></script>
+
+    <script>
+      // Globals 
+      
+      var socket = io()
+      var data = {}
+      var $scene = $('#scene')
+      var $legend = $('#legend')
+      
+      var elements = {}
+      var keyboardActions = {}
+      var activekeyboardActions = {}
+
+      // Init
+
+      $scene.addClass("loading")
+      
+      $(document).keydown(function (event) {
+        if (event.key) {
+          handleKeyDown(event.key.toUpperCase())
+        }
+      })
+      $(document).keyup(function (event) {
+        if (event.key) {
+          handleKeyUp(event.key.toUpperCase())
+        }
+      })
+
+      setInterval(update, 1000 / 60.)
+
+      // Message routes
+
+      socket.on("init", function (initialData) {
+        createScene(initialData.data)
+        updateScene(initialData.state)
+      })
+
+      socket.on("state update", function (stateData) {
+        updateScene(stateData)
+      })
+
+      function emitElementUpdate ($element, data) {
+        let stateData = {}
+        stateData[$element.attr('id')] = data
+        socket.emit("state update", stateData)
+      }
+
+      // Scene management
+
+      function createScene (data, state) {
+        elements = {}
+        keyboardActions = {}
+        activekeyboardActions = {}
+
+        $scene.removeClass("loading")
+        $scene.html('')
+        $scene.css({
+          "width": data.width + "px",
+          "height": data.height + "px",
+          "margin-left": "-" + (data.width/2) + "px",
+          "margin-top": "-" + (data.height/2) + "px"
+        })
+
+        $legend.html('')
+        data.elements.forEach(function (elementData) {
+          elements[elementData.id] = createElement(elementData)
+        })
+        
+        interact('.draggable')
+          .draggable({
+            restrict: {
+              restriction: "parent",
+              elementRect: { top: 0.2, left: 0.2, bottom: 0.8, right: 0.8 }
+            },
+            onmove: function (event) {
+              $element = $(event.target)
+              var left = parseFloat($element.attr("data-left") || 0) + event.dx
+              var top = parseFloat($element.attr("data-top") || 0) + event.dy
+              $element.attr("data-left", left)
+              $element.attr("data-top", top)
+              $element.css({
+                "left": left,
+                "top": top
+              })
+              emitElementUpdate($element, { "x": left, "y": top })
+            }
+          })
+      }
+
+      function updateScene (state) {
+        for (let elementId in state) {
+          updateElement(elements[elementId], state[elementId])
+        }
+      }
+
+      function createElement (elementData) {
+        var $element = $('<img \
+           id="' + elementData.id + '" \
+           src="' + elementData.path + '" \
+           class="element" />')
+
+        $element.css({
+          "position": "absolute",
+          "left": elementData.init_x || 0,
+          "top": elementData.init_y || 0,
+          "z-index": elementData.z || 0,
+          "display": "block"
+        })
+
+        if (elementData.background) {
+          $element.css({
+            "width": $scene.width() + "px",
+            "height": $scene.height() + "px"
+          })
+        }
+
+        if (elementData.init_hidden) {
+          $element.css({
+            "display": "none"
+          })
+        }
+
+        if (!elementData.static) {
+          $element.addClass("draggable")
+        }
+
+        $scene.append($element)
+        $element = $('#' + elementData.id)
+
+        registerKeyboardAction(elementData.key_toggle, "toggle", $element)
+        registerKeyboardAction(elementData.key_talk, "talk", $element)
+        
+        return $element
+      }
+
+      function updateElement ($element, elementState) {
+        if (elementState.x !== undefined) {
+          $element.attr("data-left", elementState.x)
+          $element.css("left", elementState.x)
+        }
+        if (elementState.y !== undefined) {
+          $element.attr("data-top", elementState.y)
+          $element.css("top", elementState.y)
+        }
+        if (elementState.visible !== undefined) {
+          elementState.visible ? $element.show() : $element.hide()
+        }
+        if (elementState.transform !== undefined) {
+          $element.css({ "transform": elementState.transform })
+        }
+      }
+
+      // Keyboard/animations management
+
+      function registerKeyboardAction (key, type, $element) {
+        if (key) {
+          keyboardActions[key.toUpperCase()] = {
+            "type": type,
+            "$element": $element
+          }
+          $legend.append("[" + key.toUpperCase() + " = " + $element.attr('id') + " " + type  + "] ")
+        }
+      }
+
+      function handleKeyDown (key) {
+        if (keyboardActions[key] && !activekeyboardActions[key]) {
+          var action = keyboardActions[key]
+          
+          if (action.type === "toggle") {
+            actionToggle(action.$element)
+          } else if (action.type === "talk") {
+            actionTalkStart(action.$element)
+            activekeyboardActions[key] = action
+          }
+        }
+      }
+      
+      function update () {
+        for (let key in activekeyboardActions) {
+          var action = keyboardActions[key]
+
+          if (action.type === "talk") {
+            actionTalk(action.$element)
+          }
+        }
+      }
+      
+      function handleKeyUp (key) {
+        if (activekeyboardActions[key]) {
+          var action = activekeyboardActions[key]
+
+          if (action.type === "talk") {
+            actionTalkEnd(action.$element)
+          }
+      
+          delete activekeyboardActions[key]
+        }
+      }
+
+      // Actions
+
+      function actionToggle ($element) {
+        $element.toggle()
+        emitElementUpdate($element, { "visible": $element.is(":visible") })
+      }
+
+      function actionTalkStart ($element) {
+        $element.attr("data-talk-start", new Date().getTime())
+      }
+      function actionTalk ($element) {
+        var time = new Date().getTime() - parseInt($element.attr("data-talk-start"))
+        var offsetY = 20 * Math.sin(time / 50)
+        var angle = 6 * Math.sin(time / 80) - 3
+        var transform = "translate(0px, " + offsetY + "px)  rotate(" + angle + "deg)"
+        $element.css({ "transform": transform })
+        emitElementUpdate($element, { "transform": transform })
+      }
+      function actionTalkEnd ($element) {
+        $element.css({ "transform": "none" })
+        emitElementUpdate($element, { "transform": "none" })
+      }
+
+      function actionMove ($element, dx, dy) {
+        var left = parseFloat($element.attr("data-left") || 0) + dx
+        var top = parseFloat($element.attr("data-top") || 0) + dy
+        $element.attr("data-left", left)
+        $element.attr("data-top", top)
+        $element.css({
+          "left": left,
+          "top": top
+        })
+        emitElementUpdate($element, { x: left, y: top })
+      }
+    </script>
+  </body>
+</html>

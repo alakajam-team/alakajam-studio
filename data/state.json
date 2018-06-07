@@ -1,9 +1,11 @@
 {
   "jamician": {
-    "transform": "none"
+    "x": 581,
+    "y": 252
   },
   "peach": {
-    "transform": "none"
+    "x": 319,
+    "y": 259
   },
   "envelope": {
     "x": 551,
@@ -11,5 +13,6 @@
   },
   "bg2": {
     "visible": false
-  }
+  },
+  "lastSaved": 1528383709607
 }

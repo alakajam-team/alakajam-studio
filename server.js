@@ -69,9 +69,13 @@ function loadJSON (file, callback) {
 }
 
 function saveState (state = {}) {
-    if (!state.lastSaved || new Date().getTime() - state.lastSaved > STATE_SAVE_MIN_DELAY) {
+    let now = new Date().getTime()
+    if (!state.lastSaved || now - state.lastSaved > STATE_SAVE_MIN_DELAY) {
+        state.lastSaved = now
         let stateString = JSON.stringify(state, null, 2)
-        fs.writeFile(STATE_FILE, stateString)
+        fs.writeFile(STATE_FILE, stateString, (err) => { 
+            if (err) error(err)
+        })
     }
 }
 

@@ -1,0 +1,15 @@
+{
+  "jamician": {
+    "transform": "none"
+  },
+  "peach": {
+    "transform": "none"
+  },
+  "envelope": {
+    "x": 551,
+    "y": 513
+  },
+  "bg2": {
+    "visible": false
+  }
+}

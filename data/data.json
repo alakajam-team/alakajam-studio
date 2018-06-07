@@ -1,0 +1,48 @@
+{
+    "width": 1200,
+    "height": 800,
+    "elements": [
+        {
+            "id": "bg1",
+            "path": "images/bg.jpg",
+            "static": true,
+            "background": true,
+            "z": 0
+        },
+        {
+            "id": "bg2",
+            "path": "images/bg2.jpg",
+            "static": true,
+            "background": true,
+            "z": 1,
+            "init_hidden": true,
+            "key_toggle": "B"
+        },
+
+        {
+            "id": "jamician",
+            "path": "images/jamician.png",
+            "z": 2,
+            "key_talk": "J"
+        },
+        {
+            "id": "peach",
+            "path": "images/peach.png",
+            "z": 3,
+            "key_talk": "P"
+        },
+        {
+            "id": "envelope",
+            "path": "images/envelope.png",
+            "z": 4
+        },
+        {
+            "id": "desk",
+            "path": "images/desk.png",
+            "z": 4,
+            "init_x": 540,
+            "init_y": 440,
+            "static": true
+        }
+    ]
+}

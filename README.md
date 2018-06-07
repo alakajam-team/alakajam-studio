@@ -1,4 +1,4 @@
-A weird toy for streams.
+A weird multiplayer toy, for streams.
 
 ## Initial setup
 

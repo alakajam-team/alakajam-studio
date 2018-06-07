@@ -4,6 +4,7 @@ const socketIo = require('socket.io')
 const moment = require('moment')
 const colors = require('colors/safe')
 const fs = require('fs')
+const path = require('path')
 
 // ========== Constants
 
@@ -23,7 +24,9 @@ let clients = 0
 
 // ========== Routes
 
-STATIC_ROOTS.map(root => app.use(express.static(root)))
+STATIC_ROOTS.map(root => app.use(
+    express.static(path.join(__dirname, root))
+))
 
 loadStateAndData((state, data) => {
     io.on("connection", function(socket) {

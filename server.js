@@ -63,6 +63,13 @@ function loadStateAndData (callback) {
 
 function loadJSON (file, callback, defaultJSON = undefined) {
     fs.readFile(file, (err, buffer) => {
+        if (!err) {
+            try {
+                callback(JSON.parse(buffer))
+            } catch (e) {
+                err = e
+            }
+        }
         if (err) {
             if (defaultJSON) {
                 callback(defaultJSON)
@@ -70,7 +77,6 @@ function loadJSON (file, callback, defaultJSON = undefined) {
                 error(err)
             }
         }
-        else callback(JSON.parse(buffer))
     })
 }
 

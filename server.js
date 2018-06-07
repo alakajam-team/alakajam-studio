@@ -26,7 +26,7 @@ let clients = 0
 
 STATIC_ROOTS.map(root => app.use(express.static(root)))
 
-loadStateAndData((state, data) => {
+loadStateAndData((data, state) => {
     io.on("connection", function(socket) {
         clients++
         log(`Client joined: ${socket.id}. Total clients: ${clients}`)
@@ -54,16 +54,22 @@ loadStateAndData((state, data) => {
 
 
 function loadStateAndData (callback) {
-    loadJSON(STATE_FILE, state => {
-        loadJSON(DATA_FILE, data => {
-            callback(state, data)
-        })
+    loadJSON(DATA_FILE, data => {
+        loadJSON(STATE_FILE, state => {
+            callback(data, state)
+        }, {})
     })
 }
 
-function loadJSON (file, callback) {
+function loadJSON (file, callback, defaultJSON = undefined) {
     fs.readFile(file, (err, buffer) => {
-        if (err) error(err)
+        if (err) {
+            if (defaultJSON) {
+                callback(defaultJSON)
+            } else {
+                error(err)
+            }
+        }
         else callback(JSON.parse(buffer))
     })
 }

@@ -9,9 +9,9 @@ const path = require('path')
 // ========== Constants
 
 const PORT = 3000
-const STATE_FILE = "data/state.json"
-const DATA_FILE = "data/data.json"
-const STATIC_ROOTS = ["./static", "./data"]
+const STATE_FILE = path.join(__dirname, "data/state.json")
+const DATA_FILE = path.join(__dirname, "data/data.json")
+const STATIC_ROOTS = [path.join(__dirname, "static"), path.join(__dirname, "data")]
 const STATE_SAVE_MIN_DELAY = 1000
 const STATE_FULL_REFRESH_DELAY = 5000
 
@@ -24,9 +24,7 @@ let clients = 0
 
 // ========== Routes
 
-STATIC_ROOTS.map(root => app.use(
-    express.static(path.join(__dirname, root))
-))
+STATIC_ROOTS.map(root => app.use(express.static(root)))
 
 loadStateAndData((state, data) => {
     io.on("connection", function(socket) {

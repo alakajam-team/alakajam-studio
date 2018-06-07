@@ -12,7 +12,7 @@
     "y": 513
   },
   "bg2": {
-    "visible": false
+    "hidden": true
   },
   "lastSaved": 1528383709607
 }

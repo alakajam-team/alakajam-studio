@@ -161,8 +161,8 @@
           $element.attr("data-top", elementState.y)
           $element.css("top", elementState.y)
         }
-        if (elementState.visible !== undefined) {
-          elementState.visible ? $element.show() : $element.hide()
+        if (elementState.hidden !== undefined) {
+          elementState.hidden ? $element.hide() : $element.show()
         }
         if (elementState.transform !== undefined) {
           $element.css({ "transform": elementState.transform })
@@ -220,7 +220,7 @@
 
       function actionToggle ($element) {
         $element.toggle()
-        emitElementUpdate($element, { "visible": $element.is(":visible") })
+        emitElementUpdate($element, { "hidden": !$element.is(":visible") })
       }
 
       function actionTalkStart ($element) {

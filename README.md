@@ -8,6 +8,8 @@ Requirement: NodeJS 7.6+
 * `node server.js`
 * Browse to `http://localhost:3000`
 
+Most of the code is in `server.js` and `static/index.html`.
+
 ## Developer tools
 
 Prerequisites: `npm install -g browser-refresh node-inspector forever`

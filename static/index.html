@@ -2,26 +2,18 @@
 <html>
   <head>
     <title>Alakajam! Studio</title>
-    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
   </head>
   <body>
-    <div id="legend">
+    <div class="panel">
+      <h1>
+          <img src="/logo.png" style="vertical-align: middle; width: 96px" /> Alakajam! Studio
+      </h1>
+      {% for roomId, room in rooms %}
+        <p>
+          <a href="/room/{{ roomId}}">{{ room.title }}</a>
+        </p>
+      {% endfor %}
     </div>
-    <div id="scene">
-      Loading...
-    </div>
-
-    <script src="lib/jquery-3.3.1.js"></script>
-    <script src="lib/lodash-core.js"></script>
-    <script src="lib/socket.io.dev.js"></script>
-    <script src="lib/interact.js"></script>
-    <script src="lib/soundbox.js"></script>
-
-    <script src="client.js"></script>
-    <script src="element-plugins.js"></script>
-    <script src="action-plugins.js"></script>
-    <script>
-      Studio.init('#scene', '#legend')
-    </script>
   </body>
 </html>

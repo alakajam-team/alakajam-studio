@@ -5,7 +5,7 @@ Studio = (function () {
     this.$scene = null
     this.socket = null
 
-    // Local data
+    // Local data²
 
     var self = this
     var $legend = null
@@ -18,8 +18,8 @@ Studio = (function () {
 
     // Public API
 
-    this.init = function (sceneSelector, legendSelector) {
-        this.socket = io({ transports: ['websocket'] })
+    this.init = function (roomId, sceneSelector, legendSelector) {
+        this.socket = io('/?roomId=' + roomId, { transports: ['websocket'] })
         this.socket.on('reconnect_attempt', function () { this.socket.io.opts.transports = ['polling', 'websocket'] })
 
         this.$scene = $(sceneSelector)
@@ -45,14 +45,14 @@ Studio = (function () {
 
         this.$scene.addClass('loading')
 
-        this.socket.on('init', function (initialData) {
+        this.socket.on('init', function (roomInfo) {
             self.$scene.removeClass('loading')
-            self._createScene(initialData.data)
-            self._updateScene(initialData.state)
+            self._createScene(roomInfo.data)
+            self._updateScene(roomInfo.state)
         })
 
         this.socket.on('state update', function (stateData) {
-            self._updateScene(stateData)
+           self._updateScene(stateData)
         })
     }
 
@@ -65,7 +65,7 @@ Studio = (function () {
     }
 
     this.emitElementUpdate = function ($element, data) {
-        var stateData = {}
+        var stateData = { }
         stateData[$element.attr('id')] = data
         this.socket.emit('state update', stateData)
     }

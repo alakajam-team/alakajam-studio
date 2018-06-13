@@ -1,4 +1,5 @@
 const express = require('express')
+const expressNunjucks = require('express-nunjucks')
 const http = require('http')
 const socketIo = require('socket.io')
 const moment = require('moment')
@@ -9,9 +10,9 @@ const path = require('path')
 // ========== Constants
 
 const PORT = 3000
-const STATE_FILE = path.join(__dirname, 'data/state.json')
-const DATA_FILE = path.join(__dirname, 'data/data.json')
-const STATIC_ROOTS = [path.join(__dirname, 'static'), path.join(__dirname, 'data')]
+const DATA_ROOT = path.join(__dirname, 'data')
+const ROOMS_FILE = path.join(DATA_ROOT, 'rooms.json')
+const STATIC_ROOTS = [path.join(__dirname, 'static'), DATA_ROOT]
 const STATE_SAVE_MIN_DELAY = 1000
 const STATE_FULL_REFRESH_DELAY = 5000
 
@@ -24,42 +25,83 @@ let clients = 0
 
 // ========== Routes
 
-STATIC_ROOTS.map(root => app.use(express.static(root)))
+loadRooms(rooms => {
+  let roomIds = Object.keys(rooms)
 
-loadStateAndData((data, state) => {
+  // Pages & assets
+
+  app.set('views', path.join(__dirname, '/static'))
+  expressNunjucks(app, { watch: true, noCache: true })
+
+  app.get('/', (req, res) => {
+    res.render('index', { rooms })
+  })
+  app.get('/room/:roomId', (req, res) => {
+    res.render('room', { roomId: req.params.roomId })
+  })
+
+  STATIC_ROOTS.map(root => app.use(express.static(root)))
+
+  // SocketIO
+
   io.on('connection', function (socket) {
     clients++
     log(`Client joined: ${socket.id}. Total clients: ${clients}`)
 
-    socket.emit('init', { data, state })
+    let socketRoom = rooms[socket.handshake.query.roomId]
+    socket.join(socketRoom.id)
+    socket.emit('init', socketRoom)
 
     socket.on('state update', stateData => {
-      state = Object.assign(state, stateData) // data can be a partial state
-      socket.broadcast.emit('state update', stateData)
-      saveState(state)
+      socketRoom.state = Object.assign(socketRoom.state, stateData) // data can be a partial state
+      io.to(socketRoom.id).emit('state update', stateData)
+      saveState(socketRoom)
     })
+
     socket.on('disconnect', function () {
       clients--
       log(`Client left: ${socket.id}. Total clients: ${clients}`)
     })
   })
 
-  setInterval(() => io.emit('state update', state), STATE_FULL_REFRESH_DELAY)
+  setInterval(() => roomIds.map(roomId => {
+    let room = rooms[roomId]
+    io.to(roomId).emit('state update', room.state)
+    saveState(room)
+  }), STATE_FULL_REFRESH_DELAY)
 
   httpServer.listen(3000, () => log(`Alakajam! Studio launched on *:${PORT}`))
 })
 
 // ========== State management
 
-function loadStateAndData (callback) {
-  loadJSON(DATA_FILE, data => {
-    loadJSON(STATE_FILE, state => {
-      callback(data, state)
+function loadRooms(callback) {
+  loadJSON(ROOMS_FILE, roomsData => {
+    let rooms = {}
+    for (let index in roomsData) {
+      loadRoom(index, roomsData, rooms, callback)
+    }
+  })
+}
+
+function loadRoom(index, roomsData, rooms, callback) {
+  let roomData = roomsData[index]
+  let dataPath = path.join(DATA_ROOT, roomData.data_path)
+  let statePath = path.join(DATA_ROOT, roomData.state_path)
+
+  loadJSON(dataPath, data => {
+    loadJSON(statePath, state => {
+      roomData.data = data
+      roomData.state = state
+      rooms[roomData.id] = roomData
+      if (Object.keys(rooms).length === roomsData.length) {
+        callback(rooms)
+      }
     }, {})
   })
 }
 
-function loadJSON (file, callback, defaultJSON = undefined) {
+function loadJSON(file, callback, defaultJSON = undefined) {
   fs.readFile(file, (err, buffer) => {
     if (!err) {
       try {
@@ -78,12 +120,14 @@ function loadJSON (file, callback, defaultJSON = undefined) {
   })
 }
 
-function saveState (state = {}) {
+function saveState(room) {
+  let statePath = path.join(DATA_ROOT, room.state_path)
+  let state = room.state || {}
   let now = new Date().getTime()
   if (!state.lastSaved || now - state.lastSaved > STATE_SAVE_MIN_DELAY) {
     state.lastSaved = now
     let stateString = JSON.stringify(state, null, 2)
-    fs.writeFile(STATE_FILE, stateString, (err) => {
+    fs.writeFile(statePath, stateString, (err) => {
       if (err) error(err)
     })
   }
@@ -91,18 +135,18 @@ function saveState (state = {}) {
 
 // ========== Misc functions
 
-function log () {
+function log() {
   let argsWithTimestamp = [getTimestamp(), colors.green('INFO')]
   for (let argument of arguments) argsWithTimestamp.push(argument)
   console.log.apply(null, argsWithTimestamp)
 }
 
-function error () {
+function error() {
   let argsWithTimestamp = [getTimestamp(), colors.red('ERROR')]
   for (let argument of arguments) argsWithTimestamp.push(argument)
   console.log.apply(null, argsWithTimestamp)
 }
 
-function getTimestamp () {
+function getTimestamp() {
   return moment().format('YYYY-MM-DD HH:mm:ss')
 }

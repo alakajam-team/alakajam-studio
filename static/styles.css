@@ -68,3 +68,23 @@ body {
 iframe {
     border: 2px solid rgba(0,0,0,0.2);
 }
+
+.panel {
+    background-color: white;
+    border-radius: 2px;
+    border: 2px solid black;
+    padding: 20px;
+    margin: 20px;
+    font-size: 20pt;
+}
+.panel a {
+    font-weight: bold;
+    text-decoration: none;
+    color: #036;
+}
+.panel p, .panel h1 {
+    margin-bottom: 20px;
+}
+.panel p:last-child {
+    margin-bottom: 0;
+}

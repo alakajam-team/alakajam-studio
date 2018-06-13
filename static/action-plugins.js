@@ -31,7 +31,7 @@ var ActionPlugin = function (options) {
 
   // Plugin initialization
   // init()
-  if (options.init) options.init()
+  if (options.init) options.init.call(this)
 }
 
 // Toggle plugin
@@ -51,7 +51,7 @@ Studio.registerActionPlugin(new ActionPlugin({
   }
 }))
 
-// Talk plugin
+// Talk animation plugin
 
 Studio.registerActionPlugin(new ActionPlugin({
   name: 'talk',
@@ -81,10 +81,10 @@ Studio.registerActionPlugin(new ActionPlugin({
   }
 }))
 
-// Movement plugin
+// Dragging plugin
 
 Studio.registerActionPlugin(new ActionPlugin({
-  name: 'move',
+  name: 'drag',
   watchDragEvents: true,
 
   onElementCreate: function ($element) {
@@ -112,5 +112,24 @@ Studio.registerActionPlugin(new ActionPlugin({
       $element.attr('data-top', elementState.y)
       $element.css('top', elementState.y)
     }
+  }
+}))
+
+// Play sound plugin
+
+Studio.registerActionPlugin(new ActionPlugin({
+  name: 'play',
+
+  init: function () {
+    this.soundbox = new SoundBox()
+  },
+
+  onElementCreate: function ($element, elementData) {
+    this.soundbox.load(elementData.id, elementData.path)
+    $element[0].soundbox = this.soundbox
+  },
+
+  run: function ($element) {
+    $element[0].soundbox.play($element.attr('id'))
   }
 }))

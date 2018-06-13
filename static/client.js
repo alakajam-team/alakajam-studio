@@ -99,8 +99,9 @@ Studio = (function () {
                 onmove: function (event) {
                     $element = $(event.target)
                     for (var pluginName in actionPlugins) {
-                        if (actionPlugins[pluginName].watchDragEvents) {
-                            actionPlugins[pluginName].update($element, event.dx, event.dy)
+                        let plugin = actionPlugins[pluginName]
+                        if (plugin && plugin.watchDragEvents) {
+                            plugin.update($element, event.dx, event.dy)
                         }
                     }
                 }
@@ -140,7 +141,12 @@ Studio = (function () {
             $element.data('plugins', Object.keys(actions))
             for (var pluginName in actions) {
                 this._registerAction(actions[pluginName], pluginName, $element)
-                actionPlugins[pluginName].onElementCreate($element, elementData)
+                var plugin = actionPlugins[pluginName]
+                if (plugin) {
+                    plugin.onElementCreate($element, elementData)
+                } else {
+                    console.error("Unsupported action plugin: " + pluginName)
+                }
             }
         }
 
@@ -157,7 +163,9 @@ Studio = (function () {
         if (actions) {
             for (var index in actions) {
                 var pluginName = actions[index]
-                actionPlugins[pluginName].onElementUpdate($element, elementState)
+                if (actionPlugins[pluginName]) {
+                    actionPlugins[pluginName].onElementUpdate($element, elementState)
+                }
             }
         }
     }

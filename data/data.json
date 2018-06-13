@@ -24,7 +24,7 @@
             "path": "images/jamician.png",
             "z": 2,
             "actions": {
-                "move": true,
+                "drag": true,
                 "talk": "J"
             }
         },
@@ -33,7 +33,7 @@
             "path": "images/peach.png",
             "z": 3,
             "actions": {
-                "move": true,
+                "drag": true,
                 "talk": "P"
             }
         },
@@ -42,7 +42,7 @@
             "path": "images/envelope.png",
             "z": 4,
             "actions": {
-                "move": true
+                "drag": true
             }
         },
         {
@@ -51,6 +51,15 @@
             "z": 4,
             "init_x": 540,
             "init_y": 440
+        },
+
+        {
+            "id": "explosion",
+            "path": "sound/explosion.wav",
+            "type": "sound",
+            "actions": {
+                "play": "1"
+            }
         }
     ]
 }

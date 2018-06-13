@@ -4,21 +4,20 @@
     "elements": [
         {
             "id": "bg1",
-            "path": "images/bg.jpg",
             "type": "background",
+            "path": "images/bg.jpg",
             "z": 0
         },
         {
             "id": "bg2",
-            "path": "images/bg2.jpg",
             "type": "background",
+            "path": "images/bg2.jpg",
             "z": 1,
             "init_hidden": true,
             "actions": {
                 "toggle": "B"
             }
         },
-
         {
             "id": "jamician",
             "path": "images/jamician.png",
@@ -52,13 +51,25 @@
             "init_x": 540,
             "init_y": 440
         },
-
         {
             "id": "explosion",
-            "path": "sound/explosion.wav",
             "type": "sound",
+            "path": "sound/explosion.wav",
             "actions": {
                 "play": "1"
+            }
+        },
+
+        {
+            "id": "iframe_test",
+            "type": "iframe",
+            "path": "https://alakajam.com/api/featuredEvent",
+            "width": 500,
+            "height": 275,
+            "init_x": 350,
+            "init_y": 190,
+            "actions": {
+                "drag": true
             }
         }
     ]

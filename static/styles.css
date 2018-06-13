@@ -64,3 +64,7 @@ body {
     text-align: center;
     color: rgba(255,255,255,0.7)
 }
+
+iframe {
+    border: 2px solid rgba(0,0,0,0.2);
+}

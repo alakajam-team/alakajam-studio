@@ -35,7 +35,9 @@ Prerequisites: `npm install -g browser-refresh node-inspector forever`
 * `type` *(optional)* The element type, among those defined in `static/element-plugins.js`.
 ** `image` = A simple image
 ** `background` = An image stretched to fit the size of the scene
-* `z` *(optional)* The z-index. Set to zero by default
+* `width` *(optional)* The element width in pixels
+* `height` *(optional)* The element height in pixels
+* `z` *(optional)* The z-index, set to zero by default
 
 **Element attributes: actions**
 

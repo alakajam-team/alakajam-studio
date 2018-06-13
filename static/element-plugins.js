@@ -24,8 +24,8 @@ Studio.registerElementPlugin(new ElementPlugin({
         _getPictureSize(elementData.path, function (width, height) {
             $element.css({
                 'background-image': 'url(' + elementData.path + ')',
-                'min-width': width + 'px',
-                'min-height': height + 'px'
+                'min-width': (elementData.width || width) + 'px',
+                'min-height': (elementData.height || height) + 'px'
             })
         })
     }
@@ -56,4 +56,22 @@ Studio.registerElementPlugin(new ElementPlugin({
 
 Studio.registerElementPlugin(new ElementPlugin({
     name: 'sound'
+}))
+
+// iframe plugin
+
+Studio.registerElementPlugin(new ElementPlugin({
+    name: 'iframe',
+
+    onElementCreate: function ($element, elementData) {
+        var widthWithUnit = (elementData.width || 400) + 'px'
+        var heightWithUnit = (elementData.height || 400) + 'px'
+
+        $element.css({
+            'min-width': widthWithUnit,
+            'min-height': heightWithUnit
+        })
+        $element.append('<iframe src="' + elementData.path + '" \
+            width="' + widthWithUnit + '" height="' + heightWithUnit + '" />')
+    }
 }))

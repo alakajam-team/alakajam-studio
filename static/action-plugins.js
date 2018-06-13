@@ -22,7 +22,7 @@ var ActionPlugin = function (options) {
   this.end = options.end || function () { }
 
   // Called when an element that uses this plugin is being created
-  // onElementCreate($element)
+  // onElementCreate($element, elementData)
   this.onElementCreate = options.onElementCreate || function () { }
 
   // Called when an element that uses this plugin is being remotely updated

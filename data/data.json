@@ -5,13 +5,13 @@
         {
             "id": "bg1",
             "path": "images/bg.jpg",
-            "background": true,
+            "type": "background",
             "z": 0
         },
         {
             "id": "bg2",
             "path": "images/bg2.jpg",
-            "background": true,
+            "type": "background",
             "z": 1,
             "init_hidden": true,
             "actions": {

@@ -1,0 +1,116 @@
+var ActionPlugin = function (options) {
+  // A mandatory name for the plugin, to be referenced in the data.json file
+  this.name = options.name
+
+  // If true, update($element, dx, dy) will be called during dragging
+  this.watchDragEvents = options.watchDragEvents || false
+
+  // Called when an element interaction starts
+  // start($element)
+  this.start = options.start || function ($element) { this.run($element) }
+
+  // Called once when there is an element interaction
+  // run($element)
+  this.run = options.run || function () { }
+
+  // Called every frame during an element interaction
+  // update($element[, dx, dy])
+  this.update = options.update || function () { }
+
+  // Called when there an element interaction ends
+  // end($element)
+  this.end = options.end || function () { }
+
+  // Called when an element that uses this plugin is being created
+  // onElementCreate($element)
+  this.onElementCreate = options.onElementCreate || function () { }
+
+  // Called when an element that uses this plugin is being remotely updated
+  // onElementUpdate($element, elementState)
+  this.onElementUpdate = options.onElementUpdate || function () { }
+
+  // Plugin initialization
+  // init()
+  if (options.init) options.init()
+}
+
+// Toggle plugin
+
+Studio.registerActionPlugin(new ActionPlugin({
+  name: 'toggle',
+
+  run: function ($element) {
+    $element.toggle()
+    Studio.emitElementUpdate($element, { 'hidden': !$element.is(':visible') })
+  },
+
+  onElementUpdate: function ($element, elementState) {
+    if (elementState.hidden !== undefined) {
+      elementState.hidden ? $element.hide() : $element.show()
+    }
+  }
+}))
+
+// Talk plugin
+
+Studio.registerActionPlugin(new ActionPlugin({
+  name: 'talk',
+
+  start: function ($element) {
+    $element.attr('data-talk-start', new Date().getTime())
+  },
+
+  update: function ($element) {
+    var time = new Date().getTime() - parseInt($element.attr('data-talk-start'))
+    var offsetY = 20 * Math.sin(time / 50)
+    var angle = 6 * Math.sin(time / 80) - 3
+    var transform = 'translate(0px, ' + offsetY + 'px)  rotate(' + angle + 'deg)'
+    $element.css({ 'transform': transform })
+    Studio.emitElementUpdate($element, { 'transform': transform })
+  },
+
+  end: function ($element) {
+    $element.css({ 'transform': 'none' })
+    Studio.emitElementUpdate($element, { 'transform': 'none' })
+  },
+
+  onElementUpdate: function ($element, elementState) {
+    if (elementState.transform !== undefined) {
+      $element.css({ 'transform': elementState.transform })
+    }
+  }
+}))
+
+// Movement plugin
+
+Studio.registerActionPlugin(new ActionPlugin({
+  name: 'move',
+  watchDragEvents: true,
+
+  onElementCreate: function ($element) {
+    $element.addClass('draggable')
+  },
+
+  update: function ($element, dx, dy) {
+    var left = parseFloat($element.attr('data-left') || 0) + dx
+    var top = parseFloat($element.attr('data-top') || 0) + dy
+    $element.attr('data-left', left)
+    $element.attr('data-top', top)
+    $element.css({
+      'left': left,
+      'top': top
+    })
+    Studio.emitElementUpdate($element, { x: left, y: top })
+  },
+
+  onElementUpdate: function ($element, elementState) {
+    if (elementState.x !== undefined) {
+      $element.attr('data-left', elementState.x)
+      $element.css('left', elementState.x)
+    }
+    if (elementState.y !== undefined) {
+      $element.attr('data-top', elementState.y)
+      $element.css('top', elementState.y)
+    }
+  }
+}))

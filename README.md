@@ -32,14 +32,14 @@ Prerequisites: `npm install -g browser-refresh node-inspector forever`
 
 * `id` A unique identifier. Also used for building the controls legend
 * `path` The picture path
-* `static` *(optional)* If true, the picture won't be draggable
 * `background` *(optional)* If true, the picture size will be adapted to fit the scene
 * `z` *(optional)* The z-index. Set to zero by default
 
 **Element attributes: actions**
 
-* `key_talk` *(optional)* A key to hold in order to animate the sprite as if it was talking
-* `key_toggle` *(optional)* A key to press to toggle the spite visibility
+* `actions.talk` *(optional)* A key to hold in order to animate the sprite as if it was talking
+* `actions.toggle` *(optional)* A key to press to toggle the spite visibility
+* `actions.move` *(optional)* True if the element can be moved
 
 **Element attributes: initial state**
 

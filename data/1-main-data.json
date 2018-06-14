@@ -15,6 +15,12 @@
             "path": "/images/bg-tvset.png",
             "z": 1
         },
+        {
+            "id": "bg-tvset-desk",
+            "type": "background",
+            "path": "/images/bg-tvset-desk.png",
+            "z": 100
+        },
 
         {
             "id": "chara-wan",

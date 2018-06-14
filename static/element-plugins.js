@@ -10,6 +10,10 @@ var ElementPlugin = function (options) {
     // onElementUpdate($element, elementState)
     this.onElementUpdate = options.onElementUpdate || function () { }
 
+    // Called on each element of this type, every frame
+    // update($element)
+    this.update = options.update
+
     // Plugin initialization
     // init()
     if (options.init) options.init()
@@ -24,6 +28,7 @@ Studio.registerElementPlugin(new ElementPlugin({
         _getPictureSize(elementData.path, function (width, height) {
             $element.css({
                 'background-image': 'url(' + elementData.path + ')',
+                'background-size': 'cover',
                 'min-width': (elementData.width || width) + 'px',
                 'min-height': (elementData.height || height) + 'px'
             })
@@ -41,6 +46,7 @@ function _getPictureSize(src, callback) {
 
 Studio.registerElementPlugin(new ElementPlugin({
     name: 'background',
+    watchUpdate: true,
 
     onElementCreate: function ($element, elementData) {
         $element.css({
@@ -49,6 +55,24 @@ Studio.registerElementPlugin(new ElementPlugin({
             'min-width': Studio.$scene.width() + 'px',
             'min-height': Studio.$scene.height() + 'px'
         })
+        if (elementData.speed_x) {
+            var speed = { x: elementData.speed_x, y: elementData.speed_y }
+            $element.data('speed', speed)
+        }
+    },
+
+    update: function ($element) {
+        var speed = $element.data('speed')
+        if (speed && speed.x) {
+            var newX = speed.x + $element.data('position-x') || 0
+            var newY = speed.y + $element.data('position-y') || 0
+            $element.css({
+                'background-position-x': newX + 'px',
+                'background-position-y': newY + 'px'
+            })
+            $element.data('position-x', newX)
+            $element.data('position-y', newY)
+        }
     }
 }))
 

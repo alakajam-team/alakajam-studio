@@ -1,14 +1,14 @@
 [
     {
         "id": 1,
-        "title": "1 Main room",
+        "title": "Room #1: 3rd Alakajam! Opening Ceremony",
         "data_path": "1-main-data.json",
         "state_path": "1-main-state.json"
     },
 
     {
         "id": 2,
-        "title": "2 Test room",
+        "title": "Room #2: Tests",
         "data_path": "2-test-data.json",
         "state_path": "2-test-state.json"
     }

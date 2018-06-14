@@ -15,6 +15,7 @@ Studio = (function () {
     var updateInterval = null
     var actionPlugins = {}
     var elementPlugins = {}
+    var elementUpdates = []
 
     // Public API
 
@@ -117,8 +118,10 @@ Studio = (function () {
     }
 
     this._createElement = function (elementData) {
+        var elementType = elementData.type || 'image'
         var $element = $('<div \
             id="' + elementData.id + '" \
+            data-type="' + elementType + '" \
             class="element" />')
         $element.css({
             'position': 'absolute',
@@ -131,9 +134,12 @@ Studio = (function () {
         this.$scene.append($element)
         $element = $('#' + elementData.id)
             
-        var elementPlugin = elementPlugins[elementData.type || 'image']
+        var elementPlugin = elementPlugins[elementType]
         if (elementPlugin) {
             elementPlugin.onElementCreate($element, elementData)
+            if (elementPlugin.update) {
+                elementUpdates.push($element)
+            }
         }
 
         var actions = elementData.actions
@@ -194,6 +200,10 @@ Studio = (function () {
     }
 
     this._update = function () {
+        elementUpdates.forEach(function ($element) {
+            elementPlugins[$element.data('type')].update($element)
+        })
+
         for (var key in activeKeyboardActions) {
             var action = keyboardActions[key]
             actionPlugins[action.pluginName].update(action.$element)

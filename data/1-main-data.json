@@ -1,55 +1,58 @@
 {
-    "width": 1200,
-    "height": 800,
+    "width": 1280,
+    "height": 720,
     "elements": [
         {
-            "id": "bg1",
+            "id": "bg-mosaic",
             "type": "background",
-            "path": "/images/bg.jpg",
+            "path": "/images/bg-mosaic.png",
+            "speed_x": 0.3,
             "z": 0
         },
         {
-            "id": "bg2",
+            "id": "bg-tvset",
             "type": "background",
-            "path": "/images/bg2.jpg",
-            "z": 1,
-            "init_hidden": true,
-            "actions": {
-                "toggle": "B"
-            }
+            "path": "/images/bg-tvset.png",
+            "z": 1
         },
+
         {
-            "id": "jamician",
-            "path": "/images/jamician.png",
-            "z": 2,
-            "actions": {
-                "drag": true,
-                "talk": "J"
-            }
-        },
-        {
-            "id": "peach",
-            "path": "/images/peach.png",
-            "z": 3,
-            "actions": {
-                "drag": true,
-                "talk": "P"
-            }
-        },
-        {
-            "id": "envelope",
-            "path": "/images/envelope.png",
-            "z": 4,
+            "id": "chara-wan",
+            "path": "/images/chara-wan.jpg",
+            "width": 64,
+            "height": 64,
+            "z": 10,
             "actions": {
                 "drag": true
             }
         },
         {
-            "id": "desk",
-            "path": "/images/desk.png",
-            "z": 4,
-            "init_x": 540,
-            "init_y": 440
+            "id": "chara-aurel",
+            "path": "/images/chara-aurel.png",
+            "width": 64,
+            "height": 64,
+            "z": 10,
+            "actions": {
+                "drag": true
+            }
+        },
+        {
+            "id": "chara-danae",
+            "path": "/images/chara-danae.jpg",
+            "width": 64,
+            "height": 64,
+            "z": 10,
+            "actions": {
+                "drag": true
+            }
+        },
+        {
+            "id": "chara-dollarone",
+            "path": "/images/chara-dollarone.gif",
+            "z": 10,
+            "actions": {
+                "drag": true
+            }
         }
     ]
 }

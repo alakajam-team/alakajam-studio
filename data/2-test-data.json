@@ -5,13 +5,13 @@
         {
             "id": "bg1",
             "type": "background",
-            "path": "/images/bg.jpg",
+            "path": "/images/bg-akj1.jpg",
             "z": 0
         },
         {
             "id": "bg2",
             "type": "background",
-            "path": "/images/bg2.jpg",
+            "path": "/images/bg2-akj1-resutl.jpg",
             "z": 1,
             "init_hidden": true,
             "actions": {
@@ -20,8 +20,10 @@
         },
         {
             "id": "jamician",
-            "path": "/images/jamician.png",
+            "path": "/images/chara-jamician.png",
             "z": 2,
+            "init_x": 200,
+            "init_y": 400,
             "actions": {
                 "drag": true,
                 "talk": "J"
@@ -29,8 +31,10 @@
         },
         {
             "id": "peach",
-            "path": "/images/peach.png",
+            "path": "/images/chara-peach.png",
             "z": 3,
+            "init_x": 700,
+            "init_y": 400,
             "actions": {
                 "drag": true,
                 "talk": "P"
@@ -38,7 +42,7 @@
         },
         {
             "id": "envelope",
-            "path": "/images/envelope.png",
+            "path": "/images/prop-envelope.png",
             "z": 4,
             "actions": {
                 "drag": true
@@ -46,7 +50,7 @@
         },
         {
             "id": "desk",
-            "path": "/images/desk.png",
+            "path": "/images/prop-desk.png",
             "z": 4,
             "init_x": 540,
             "init_y": 440

@@ -162,6 +162,7 @@ Studio = (function () {
     }
 
     this._updateElement = function ($element, elementState) {
+        // XXX Small risk of desync, eg. if someone toggles a sprite while someone else drags it
         var currentTimestamp = $element.data('timestamp')
         if (!currentTimestamp || currentTimestamp < elementState.timestamp) {
             $element.data('timestamp', elementState.timestamp)

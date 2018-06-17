@@ -40,13 +40,14 @@ Studio.registerActionPlugin(new ActionPlugin({
   name: 'toggle',
 
   run: function ($element) {
-    $element.toggle()
-    Studio.emitElementUpdate($element, { 'hidden': !$element.is(':visible') })
+    var hidden = $element.is(':visible')
+    $element.toggle(200)
+    Studio.emitElementUpdate($element, { 'hidden': hidden })
   },
 
   onElementUpdate: function ($element, elementState) {
     if (elementState.hidden !== undefined) {
-      elementState.hidden ? $element.hide() : $element.show()
+      elementState.hidden ? $element.hide(200) : $element.show(200)
     }
   }
 }))

@@ -59,6 +59,119 @@
             "actions": {
                 "drag": true
             }
+        },
+
+
+        {
+            "id": "icon-alone",
+            "path": "/images/icon-alone.png",
+            "width": 90,
+            "height": 120,
+            "z": 20,
+            "actions": {
+                "drag": true,
+                "toggle": "1"
+            }
+        },
+        {
+            "id": "icon-edible",
+            "path": "/images/icon-edible.png",
+            "width": 90,
+            "height": 120,
+            "z": 20,
+            "actions": {
+                "drag": true,
+                "toggle": "2"
+            }
+        },
+        {
+            "id": "icon-growing",
+            "path": "/images/icon-growing.png",
+            "width": 110,
+            "height": 120,
+            "z": 20,
+            "actions": {
+                "drag": true,
+                "toggle": "3"
+            }
+        },
+        {
+            "id": "icon-noui",
+            "path": "/images/icon-noui.png",
+            "width": 90,
+            "height": 120,
+            "z": 20,
+            "actions": {
+                "drag": true,
+                "toggle": "4"
+            }
+        },
+        {
+            "id": "icon-repair",
+            "path": "/images/icon-repair.png",
+            "width": 90,
+            "height": 120,
+            "z": 20,
+            "actions": {
+                "drag": true,
+                "toggle": "5"
+            }
+        },
+        {
+            "id": "icon-science",
+            "path": "/images/icon-science.png",
+            "width": 90,
+            "height": 120,
+            "z": 20,
+            "actions": {
+                "drag": true,
+                "toggle": "6"
+            }
+        },
+        {
+            "id": "icon-thievery",
+            "path": "/images/icon-thievery.png",
+            "width": 90,
+            "height": 120,
+            "z": 20,
+            "actions": {
+                "drag": true,
+                "toggle": "7"
+            }
+        },
+        {
+            "id": "icon-time",
+            "path": "/images/icon-time.png",
+            "width": 90,
+            "height": 120,
+            "z": 20,
+            "actions": {
+                "drag": true,
+                "toggle": "8"
+            }
+        },
+        {
+            "id": "icon-trash",
+            "path": "/images/icon-trash.png",
+            "width": 90,
+            "height": 120,
+            "z": 20,
+            "actions": {
+                "drag": true,
+                "toggle": "9"
+            }
+        },
+        {
+            "id": "icon-weapon",
+            "path": "/images/icon-weapon.png",
+            "width": 110,
+            "height": 120,
+            "z": 20,
+            "actions": {
+                "drag": true,
+                "toggle": "0"
+            }
         }
+
     ]
 }

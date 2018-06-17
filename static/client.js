@@ -66,7 +66,9 @@ Studio = (function () {
     }
 
     this.emitElementUpdate = function ($element, data) {
-        var stateData = { }
+        var timestamp = new Date().getTime()
+        $element.data('timestamp', timestamp)
+        var stateData = { timestamp: timestamp }
         stateData[$element.attr('id')] = data
         this.socket.emit('state update', stateData)
     }
@@ -100,7 +102,7 @@ Studio = (function () {
                 onmove: function (event) {
                     $element = $(event.target)
                     for (var pluginName in actionPlugins) {
-                        let plugin = actionPlugins[pluginName]
+                        var plugin = actionPlugins[pluginName]
                         if (plugin && plugin.watchDragEvents) {
                             plugin.update($element, event.dx, event.dy)
                         }
@@ -160,17 +162,22 @@ Studio = (function () {
     }
 
     this._updateElement = function ($element, elementState) {
-        var elementPlugin = elementPlugins[$element.data('type')]
-        if (elementPlugin) {
-            elementPlugin.onElementUpdate($element, elementState)
-        }
+        var currentTimestamp = $element.data('timestamp')
+        if (!currentTimestamp || currentTimestamp < elementState.timestamp) {
+            $element.data('timestamp', elementState.timestamp)
 
-        var actions = $element.data('plugins')
-        if (actions) {
-            for (var index in actions) {
-                var pluginName = actions[index]
-                if (actionPlugins[pluginName]) {
-                    actionPlugins[pluginName].onElementUpdate($element, elementState)
+            var elementPlugin = elementPlugins[$element.data('type')]
+            if (elementPlugin) {
+                elementPlugin.onElementUpdate($element, elementState)
+            }
+
+            var actions = $element.data('plugins')
+            if (actions) {
+                for (var index in actions) {
+                    var pluginName = actions[index]
+                    if (actionPlugins[pluginName]) {
+                        actionPlugins[pluginName].onElementUpdate($element, elementState)
+                    }
                 }
             }
         }

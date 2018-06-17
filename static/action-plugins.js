@@ -97,8 +97,8 @@ Studio.registerActionPlugin(new ActionPlugin({
     $element.attr('data-left', left)
     $element.attr('data-top', top)
     $element.css({
-      'left': left,
-      'top': top
+      'left': left + 'px',
+      'top': top + 'px'
     })
     Studio.emitElementUpdate($element, { x: left, y: top })
   },

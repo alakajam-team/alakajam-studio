@@ -49,6 +49,7 @@ body {
 
 .element {
     pointer-events: none;
+    transition: transform 0.1s;
 }
 .element.draggable {
     cursor: pointer;

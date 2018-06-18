@@ -93,15 +93,17 @@ Studio.registerActionPlugin(new ActionPlugin({
   },
 
   update: function ($element, dx, dy) {
-    var left = parseFloat($element.attr('data-left') || 0) + dx
-    var top = parseFloat($element.attr('data-top') || 0) + dy
-    $element.attr('data-left', left)
-    $element.attr('data-top', top)
-    $element.css({
-      'left': left + 'px',
-      'top': top + 'px'
-    })
-    Studio.emitElementUpdate($element, { x: left, y: top })
+    if (dx || dy) {
+      var left = parseFloat($element.attr('data-left') || 0) + dx
+      var top = parseFloat($element.attr('data-top') || 0) + dy
+      $element.attr('data-left', left)
+      $element.attr('data-top', top)
+      $element.css({
+        'left': left + 'px',
+        'top': top + 'px'
+      })
+      Studio.emitElementUpdate($element, { x: left, y: top })
+    }
   },
 
   onElementUpdate: function ($element, elementState) {
@@ -136,7 +138,46 @@ Studio.registerActionPlugin(new ActionPlugin({
     $element[0].soundbox = this.soundbox
   },
 
+  onElementUpdate: function ($element, elementState) {
+    if (elementState.play) {
+      $element[0].soundbox.play($element.attr('id'))
+    }
+  },
+
   run: function ($element) {
     $element[0].soundbox.play($element.attr('id'))
+    Studio.emitElementUpdate($element, { play: true })
   }
 }))
+
+// Zoom in plugin
+
+Studio.registerActionPlugin(new ActionPlugin({
+  name: 'zoom',
+
+  onElementCreate: function ($element, elementData) {
+    if (elementData.zoom_scale) {
+      $element.data('zoom-scale', elementData.zoom_scale)
+    }
+  },
+
+  run: function ($element) {
+    var zoomedIn = !$element.data('zoomed-in')
+    $element.data('zoomed-in', zoomedIn)
+    _refreshZoom($element)
+    Studio.emitElementUpdate($element, { zoom: zoomedIn })
+  },
+  
+  onElementUpdate: function ($element, elementState) {
+    $element.data('zoomed-in', elementState.zoom)
+    _refreshZoom($element)
+  }
+}))
+
+function _refreshZoom($element) {
+  var zoomedIn = $element.data('zoomed-in')
+  var zoomedInScale = $element.data('zoom-scale') || 2.5
+  $element.css({
+    'transform': 'scale(' + (zoomedIn ? zoomedInScale : 1) + ')'
+  })
+}

@@ -151,18 +151,21 @@
             "z": 20,
             "actions": {
                 "drag": true,
-                "toggle": "7"
+                "toggle": "7",
+                "zoom": "U"
             }
         },
         {
             "id": "icon-time",
             "path": "/images/icon-time.png",
+            "tooltip": "Buying Your Time",
             "width": 90,
             "height": 120,
             "z": 20,
             "actions": {
                 "drag": true,
-                "toggle": "8"
+                "toggle": "8",
+                "zoom": "I"
             }
         },
         {

@@ -191,6 +191,34 @@
                 "drag": true,
                 "toggle": "0"
             }
+        },
+
+        {
+            "id": "trophy-1",
+            "path": "/images/trophy-1.png",
+            "z": 1500,
+            "actions": {
+                "drag": true,
+                "toggle": "V"
+            }
+        },
+        {
+            "id": "trophy-2",
+            "path": "/images/trophy-2.png",
+            "z": 150,
+            "actions": {
+                "drag": true,
+                "toggle": "B"
+            }
+        },
+        {
+            "id": "trophy-3",
+            "path": "/images/trophy-3.png",
+            "z": 150,
+            "actions": {
+                "drag": true,
+                "toggle": "N"
+            }
         }
 
     ]

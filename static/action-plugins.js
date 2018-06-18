@@ -107,11 +107,17 @@ Studio.registerActionPlugin(new ActionPlugin({
   onElementUpdate: function ($element, elementState) {
     if (elementState.x !== undefined) {
       $element.attr('data-left', elementState.x)
-      $element.css('left', elementState.x)
+      morpheus($element[0], {
+        'left': elementState.x + 'px',
+        'duration': 100
+      })
     }
     if (elementState.y !== undefined) {
       $element.attr('data-top', elementState.y)
-      $element.css('top', elementState.y)
+      morpheus($element[0], {
+        'top': elementState.y + 'px',
+        'duration': 100
+      })
     }
   }
 }))

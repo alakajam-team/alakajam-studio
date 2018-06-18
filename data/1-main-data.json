@@ -221,6 +221,22 @@
         },
 
         {
+            "id": "sound-applause",
+            "type": "sound",
+            "path": "/sound/applause.wav",
+            "actions": {
+                "play": "D"
+            }
+        },
+        {
+            "id": "sound-laughs",
+            "type": "sound",
+            "path": "/sound/laughs.wav",
+            "actions": {
+                "play": "S"
+            }
+        },
+        {
             "id": "sound-explosion",
             "type": "sound",
             "path": "/sound/explosion.wav",

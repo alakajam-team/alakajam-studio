@@ -243,9 +243,15 @@ Studio = (function () {
     // Control panel
 
     this._createElementControl = function (picturePath, label, actionsInfo) {
+        var groupId = 'default'
+        if (label.indexOf('-') !== -1) {
+            groupId = label.split('-')[0]
+            label = label.replace(groupId + '-', '')
+        }
+
         var $control = $('<div class="control">\
             <div class="control-picture">'
-            + (picturePath ? '<img src="' + picturePath +'" />' : label)
+            + (picturePath ? '<img src="' + picturePath +'" />' : '<div style="margin: 5px">'+label+'</span>')
             + '</div>'
             //<div class="control-label">' + label + '</div>'
             + actionsInfo.map(function (actionInfo) {
@@ -259,10 +265,6 @@ Studio = (function () {
             }).join('') + 
         '</div>')
 
-        var groupId = 'default'
-        if (label.indexOf('-') !== -1) {
-            groupId = label.split('-')[0]
-        }
         this._addToControlGroup(groupId, $control)
     }
 

@@ -23,24 +23,12 @@
         },
 
         {
-            "id": "chara-wan",
-            "path": "/images/chara-wan.jpg",
-            "tooltip": "Wan",
-            "tooltip_pinned": true,
-            "width": 64,
-            "height": 64,
-            "z": 10,
-            "actions": {
-                "drag": true
-            }
-        },
-        {
             "id": "chara-aurel",
             "path": "/images/chara-aurel.png",
             "tooltip": "Aurel",
             "tooltip_pinned": true,
-            "width": 64,
-            "height": 64,
+            "width": 100,
+            "height": 157,
             "z": 10,
             "actions": {
                 "drag": true
@@ -48,11 +36,23 @@
         },
         {
             "id": "chara-danae",
-            "path": "/images/chara-danae.jpg",
+            "path": "/images/chara-danae.png",
             "tooltip": "Danae",
             "tooltip_pinned": true,
-            "width": 64,
-            "height": 64,
+            "width": 100,
+            "height": 157,
+            "z": 10,
+            "actions": {
+                "drag": true
+            }
+        },
+        {
+            "id": "chara-wan",
+            "path": "/images/chara-wan.png",
+            "tooltip": "Wan",
+            "tooltip_pinned": true,
+            "width": 100,
+            "height": 130,
             "z": 10,
             "actions": {
                 "drag": true

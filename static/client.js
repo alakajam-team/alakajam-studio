@@ -243,29 +243,31 @@ Studio = (function () {
     // Control panel
 
     this._createElementControl = function (picturePath, label, actionsInfo) {
-        var groupId = 'default'
-        if (label.indexOf('-') !== -1) {
-            groupId = label.split('-')[0]
-            label = label.replace(groupId + '-', '')
+        if (actionsInfo.length > 0) {
+            var groupId = 'default'
+            if (label.indexOf('-') !== -1) {
+                groupId = label.split('-')[0]
+                label = label.replace(groupId + '-', '')
+            }
+
+            var $control = $('<div class="control">\
+                <button class="control-picture control-button-' + label + '-' + actionsInfo[0].name + '">'
+                + (picturePath ? '<img src="' + picturePath +'" />' : '<div style="margin: 5px">'+label+'</span>')
+                + '</button>'
+                //<div class="control-label">' + label + '</div>'
+                + actionsInfo.map(function (actionInfo) {
+                    if (typeof actionInfo.callback === 'function') { 
+                        var buttonClass = 'control-button-' + label + '-' + actionInfo.name
+                        $('body').on('click', '.' + buttonClass, actionInfo.callback)
+                        return '<button class="control-button ' + buttonClass + '">' + actionInfo.name + ' <span style="color: gray">(' + actionInfo.key + ')</span></button>'
+                    } else {
+                        return ''
+                    }
+                }).join('') + 
+            '</div>')
+
+            this._addToControlGroup(groupId, $control)
         }
-
-        var $control = $('<div class="control">\
-            <div class="control-picture">'
-            + (picturePath ? '<img src="' + picturePath +'" />' : '<div style="margin: 5px">'+label+'</span>')
-            + '</div>'
-            //<div class="control-label">' + label + '</div>'
-            + actionsInfo.map(function (actionInfo) {
-                if (typeof actionInfo.callback === 'function') { 
-                    var buttonId = 'control-button-' + label + '-' + actionInfo.name
-                    $('body').on('click', '#' + buttonId, actionInfo.callback)
-                    return '<button id="' + buttonId + '" class="control-button">' + actionInfo.name + ' <span style="color: gray">(' + actionInfo.key + ')</span></button>'
-                } else {
-                    return ''
-                }
-            }).join('') + 
-        '</div>')
-
-        this._addToControlGroup(groupId, $control)
     }
 
     this._addToControlGroup = function (id, $control) {

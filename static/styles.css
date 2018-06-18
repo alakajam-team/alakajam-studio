@@ -78,7 +78,12 @@ button:hover {
 }
 
 .control-picture {
+    background-color: #125;
     width: 100%;
+    color: white;
+}
+.control-picture:hover {
+    background-color: #347;
 }
 .control-picture img {
     max-width: 100%;

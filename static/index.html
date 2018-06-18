@@ -11,7 +11,8 @@
       </h1>
       {% for roomId, room in rooms %}
         <p>
-          <a href="/room/{{ roomId}}">{{ room.title }}</a>
+          <a href="/room/{{ roomId }}">{{ room.title }}</a> | 
+            <a style="font-size: 80%" href="/room/{{ roomId }}?nocontrols">Without controls</a>
         </p>
       {% endfor %}
     </div>

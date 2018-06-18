@@ -8,7 +8,7 @@ Studio = (function () {
     // Local data²
 
     var self = this
-    var $legend = null
+    var $controls = null
     var elements = {}
     var keyboardActions = {}
     var activeKeyboardActions = {}
@@ -19,12 +19,12 @@ Studio = (function () {
 
     // Public API
 
-    this.init = function (roomId, sceneSelector, legendSelector) {
+    this.init = function (roomId, sceneSelector, controlsSelector) {
         this.socket = io('/?roomId=' + roomId, { transports: ['websocket'] })
         this.socket.on('reconnect_attempt', function () { this.socket.io.opts.transports = ['polling', 'websocket'] })
 
         this.$scene = $(sceneSelector)
-        $legend = $(legendSelector)
+        $controls = $(controlsSelector)
 
         elements = {}
         keyboardActions = {}
@@ -83,12 +83,9 @@ Studio = (function () {
         this.$scene.html('')
         this.$scene.css({
             'width': data.width + 'px',
-            'height': data.height + 'px',
-            'margin-left': '-' + (data.width / 2) + 'px',
-            'margin-top': '-' + (data.height / 2) + 'px'
+            'height': data.height + 'px'
         })
 
-        $legend.html('')
         data.elements.forEach(function (elementData) {
             elements[elementData.id] = self._createElement(elementData)
         })
@@ -109,6 +106,7 @@ Studio = (function () {
                     }
                 }
             })
+        
     }
 
     this._updateScene = function (state) {
@@ -145,10 +143,19 @@ Studio = (function () {
         }
 
         var actions = elementData.actions
+        var actionsInfo = []
         if (actions) {
             $element.data('plugins', Object.keys(actions))
             for (var pluginName in actions) {
-                this._registerAction(actions[pluginName], pluginName, $element)
+                var actionCallback = this._registerAction(actions[pluginName], pluginName, $element)
+                if (typeof actions[pluginName] !== 'boolean') {
+                    actionsInfo.push({
+                        name: pluginName,
+                        key: actions[pluginName],
+                        callback: actionCallback
+                    })
+                }
+
                 var plugin = actionPlugins[pluginName]
                 if (plugin) {
                     plugin.onElementCreate($element, elementData)
@@ -156,6 +163,10 @@ Studio = (function () {
                     console.error("Unsupported action plugin: " + pluginName)
                 }
             }
+        }
+
+        if (actionsInfo.length > 0) {
+            this._createElementControl(elementData.path, elementData.id, actionsInfo)
         }
 
         return $element
@@ -192,7 +203,10 @@ Studio = (function () {
                 'pluginName': pluginName,
                 '$element': $element
             }
-            $legend.append('[' + key.toUpperCase() + ' = ' + $element.attr('id') + ' ' + pluginName + '] ')
+            return function () {
+                self._handleKeyDown(key)
+                self._handleKeyUp(key)
+            }
         }
     }
 
@@ -224,6 +238,42 @@ Studio = (function () {
             actionPlugins[action.pluginName].end(action.$element)
             delete activeKeyboardActions[key]
         }
+    }
+
+    // Control panel
+
+    this._createElementControl = function (picturePath, label, actionsInfo) {
+        var $control = $('<div class="control">\
+            <div class="control-picture">\
+            <img src="' + picturePath +'" />\
+            </div>'
+            //<div class="control-label">' + label + '</div>'
+            + actionsInfo.map(function (actionInfo) {
+                if (typeof actionInfo.callback === 'function') { 
+                    var buttonId = 'control-button-' + label + '-' + actionInfo.name
+                    $('body').on('click', '#' + buttonId, actionInfo.callback)
+                    return '<button id="' + buttonId + '" class="control-button">' + actionInfo.name + ' <span style="color: gray">(' + actionInfo.key + ')</span></button>'
+                } else {
+                    return ''
+                }
+            }).join('') + 
+        '</div>')
+
+        var groupId = 'default'
+        if (label.indexOf('-') !== -1) {
+            groupId = label.split('-')[0]
+        }
+        this._addToControlGroup(groupId, $control)
+    }
+
+    this._addToControlGroup = function (id, $control) {
+        var groupId = 'control-group-' + id
+        if ($('#' + groupId).length === 0) {
+            $controls.append('<div id="' + groupId + '" class="control-group">\
+                <div class="control-group-label">' + id.toUpperCase() + '</div>\
+            </div>')
+        }
+        $('#' + groupId).append($control)
     }
 
     return this

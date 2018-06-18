@@ -5,7 +5,13 @@
     <link rel="stylesheet" type="text/css" href="/styles.css" />
   </head>
   <body>
-    <div id="legend">
+    <div id="controls-container">
+      <h2>
+          <button onclick="$('#controls-container').remove()" title="Alternatively, add ?nocontrols to the URL">X</button>
+          <button onclick="$('#controls').toggle()">_</button>
+        Controls
+      </h2>
+      <div id="controls"></div>
     </div>
     <div id="scene">
       Loading...
@@ -23,7 +29,11 @@
     <script src="/element-plugins.js"></script>
     <script src="/action-plugins.js"></script>
     <script>
-      Studio.init('{{ roomId }}', '#scene', '#legend')
+      if (document.location.toString().indexOf('nocontrols') !== -1) {
+        $('#controls-container').remove()
+      }
+
+      Studio.init('{{ roomId }}', '#scene', '#controls')
     </script>
   </body>
 </html>

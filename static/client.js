@@ -166,7 +166,7 @@ Studio = (function () {
         }
 
         if (actionsInfo.length > 0) {
-            this._createElementControl(elementData.path, elementData.id, actionsInfo)
+            this._createElementControl(elementType === 'image' ? elementData.path : '', elementData.id, actionsInfo)
         }
 
         return $element
@@ -244,9 +244,9 @@ Studio = (function () {
 
     this._createElementControl = function (picturePath, label, actionsInfo) {
         var $control = $('<div class="control">\
-            <div class="control-picture">\
-            <img src="' + picturePath +'" />\
-            </div>'
+            <div class="control-picture">'
+            + (picturePath ? '<img src="' + picturePath +'" />' : label)
+            + '</div>'
             //<div class="control-label">' + label + '</div>'
             + actionsInfo.map(function (actionInfo) {
                 if (typeof actionInfo.callback === 'function') { 

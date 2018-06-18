@@ -145,8 +145,11 @@ Studio.registerActionPlugin(new ActionPlugin({
   },
 
   run: function ($element) {
-    $element[0].soundbox.play($element.attr('id'))
     Studio.emitElementUpdate($element, { play: true })
+    $element[0].soundbox.play($element.attr('id'))
+      .then(function () {
+        Studio.emitElementUpdate($element, { play: false })
+      })
   }
 }))
 

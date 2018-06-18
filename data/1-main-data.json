@@ -69,7 +69,6 @@
             }
         },
 
-
         {
             "id": "icon-alone",
             "path": "/images/icon-alone.png",
@@ -218,6 +217,15 @@
             "actions": {
                 "drag": true,
                 "toggle": "N"
+            }
+        },
+
+        {
+            "id": "sound-explosion",
+            "type": "sound",
+            "path": "/sound/explosion.wav",
+            "actions": {
+                "play": "Q"
             }
         }
 

@@ -25,6 +25,8 @@
         {
             "id": "chara-wan",
             "path": "/images/chara-wan.jpg",
+            "tooltip": "Wan",
+            "tooltip_pinned": true,
             "width": 64,
             "height": 64,
             "z": 10,
@@ -35,6 +37,8 @@
         {
             "id": "chara-aurel",
             "path": "/images/chara-aurel.png",
+            "tooltip": "Aurel",
+            "tooltip_pinned": true,
             "width": 64,
             "height": 64,
             "z": 10,
@@ -45,6 +49,8 @@
         {
             "id": "chara-danae",
             "path": "/images/chara-danae.jpg",
+            "tooltip": "Danae",
+            "tooltip_pinned": true,
             "width": 64,
             "height": 64,
             "z": 10,
@@ -55,6 +61,8 @@
         {
             "id": "chara-dollarone",
             "path": "/images/chara-dollarone.gif",
+            "tooltip": "Dollarone",
+            "tooltip_pinned": true,
             "z": 10,
             "actions": {
                 "drag": true
@@ -65,6 +73,7 @@
         {
             "id": "icon-alone",
             "path": "/images/icon-alone.png",
+            "tooltip": "Alone in Space",
             "width": 90,
             "height": 120,
             "z": 20,
@@ -76,6 +85,7 @@
         {
             "id": "icon-edible",
             "path": "/images/icon-edible.png",
+            "tooltip": "Everything is Edible",
             "width": 90,
             "height": 120,
             "z": 20,
@@ -87,6 +97,7 @@
         {
             "id": "icon-growing",
             "path": "/images/icon-growing.png",
+            "tooltip": "Always Growing",
             "width": 110,
             "height": 120,
             "z": 20,
@@ -98,6 +109,7 @@
         {
             "id": "icon-noui",
             "path": "/images/icon-noui.png",
+            "tooltip": "No UI",
             "width": 90,
             "height": 120,
             "z": 20,
@@ -109,6 +121,7 @@
         {
             "id": "icon-repair",
             "path": "/images/icon-repair.png",
+            "tooltip": "Repair",
             "width": 90,
             "height": 120,
             "z": 20,
@@ -120,6 +133,7 @@
         {
             "id": "icon-science",
             "path": "/images/icon-science.png",
+            "tooltip": "Dangerous Science",
             "width": 90,
             "height": 120,
             "z": 20,
@@ -131,6 +145,7 @@
         {
             "id": "icon-thievery",
             "path": "/images/icon-thievery.png",
+            "tooltip": "Thievery",
             "width": 90,
             "height": 120,
             "z": 20,
@@ -153,6 +168,7 @@
         {
             "id": "icon-trash",
             "path": "/images/icon-trash.png",
+            "tooltip": "Trash and Treasure",
             "width": 90,
             "height": 120,
             "z": 20,
@@ -164,6 +180,7 @@
         {
             "id": "icon-weapon",
             "path": "/images/icon-weapon.png",
+            "tooltip": "Weird Weapon",
             "width": 110,
             "height": 120,
             "z": 20,

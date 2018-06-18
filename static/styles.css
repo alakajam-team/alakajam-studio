@@ -88,3 +88,43 @@ iframe {
 .panel p:last-child {
     margin-bottom: 0;
 }
+
+.clear-tooltip .tlite {
+  background-color: transparent;
+  box-shadow: none;
+  text-shadow: 1px 1px 3px black;
+  padding-bottom: 0;
+}
+
+/* Tooltips */
+
+.tlite {
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: left;
+    padding: 5px;
+    border-radius: 4px;
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s;
+    white-space: nowrap;
+    box-shadow: 0 0.5rem 1rem -0.5rem black;
+    z-index: 1000;
+    -webkit-backface-visibility: hidden;
+  }
+  
+  .tlite-table td,
+  .tlite-table th {
+    position: relative;
+  }
+  
+  .tlite-visible {
+    visibility: visible;
+    opacity: 0.9;
+  }
+  

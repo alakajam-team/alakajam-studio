@@ -32,6 +32,21 @@ Studio.registerElementPlugin(new ElementPlugin({
                 'min-width': (elementData.width || width) + 'px',
                 'min-height': (elementData.height || height) + 'px'
             })
+
+            if (elementData.tooltip) {
+                var tliteOptions = { grav: 's' }
+                $element.attr('data-tlite', elementData.tooltip)
+                $element.addClass('has-tooltip')
+                tlite(function (el) { 
+                    if (el.classList.contains('has-tooltip')) {
+                        return tliteOptions
+                    }
+                })
+                if (elementData.tooltip_pinned) {
+                    tlite.show($element[0], tliteOptions)
+                    $element.addClass('clear-tooltip')
+                }
+            }
         })
     }
 }))

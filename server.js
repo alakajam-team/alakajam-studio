@@ -97,11 +97,22 @@ function loadRoom(index, roomsData, rooms, callback) {
   let dataPath = path.join(DATA_ROOT, roomData.data_path)
   let statePath = path.join(DATA_ROOT, roomData.state_path)
 
+  // Load data & state
   loadJSON(dataPath, data => {
     loadJSON(statePath, state => {
       roomData.data = data
       roomData.state = state
       rooms[roomData.id] = roomData
+
+      // Auto-refresh room data upon file change
+      fs.watch(dataPath, () => {
+        loadJSON(dataPath, data => {
+          console.log(`${dataPath} refreshed`)
+          roomData.data = data
+        })
+      })
+
+      // Fire callback when all rooms are loaded
       if (Object.keys(rooms).length === roomsData.length) {
         callback(rooms)
       }

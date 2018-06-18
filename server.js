@@ -56,7 +56,7 @@ loadRooms(rooms => {
       for (let key in stateData) {
         let stateDataItem = stateData[key]
         if (typeof stateData[key] === 'object') {
-          socketRoom.state[key] = Object.assign(socketRoom.state[key], stateDataItem) // data can be a partial state
+          socketRoom.state[key] = Object.assign(socketRoom.state[key] || {}, stateDataItem) // data can be a partial state
         } else {
           socketRoom.state[key] = stateDataItem // special data
         }

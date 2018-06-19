@@ -139,13 +139,13 @@ Studio.registerActionPlugin(new ActionPlugin({
   },
 
   onElementUpdate: function ($element, elementState) {
-    if (elementState.play) {
+    if (elementState.play > new Date().getTime() - 4000) {
       $element[0].soundbox.play($element.attr('id'))
     }
   },
 
   run: function ($element) {
-    Studio.emitElementUpdate($element, { play: true })
+    Studio.emitElementUpdate($element, { play: new Date().getTime() })
     $element[0].soundbox.play($element.attr('id'))
       .then(function () {
         Studio.emitElementUpdate($element, { play: false })

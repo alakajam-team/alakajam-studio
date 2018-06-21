@@ -5,6 +5,9 @@ var ActionPlugin = function (options) {
   // If true, update($element, dx, dy) will be called during dragging
   this.watchDragEvents = options.watchDragEvents || false
 
+  // If true, start($element) will be called when clicking
+  this.watchClickEvents = options.watchClickEvents || false
+
   // Called when an element interaction starts
   // start($element)
   this.start = options.start || function ($element) { this.run($element) }
@@ -179,8 +182,37 @@ Studio.registerActionPlugin(new ActionPlugin({
 
 function _refreshZoom($element) {
   var zoomedIn = $element.data('zoomed-in')
-  var zoomedInScale = $element.data('zoom-scale') || 2.5
+  var zoomedInScale = $element.data('zoom-scale') || 1.8
   $element.css({
     'transform': 'scale(' + (zoomedIn ? zoomedInScale : 1) + ')'
   })
 }
+
+
+// Set text plugin
+
+Studio.registerActionPlugin(new ActionPlugin({
+  name: 'edittext',
+  watchClickEvents: true,
+
+  start: function ($element) {
+    var text = prompt("Enter the new text", $element.text())
+    if (text !== null) {
+      $element.text(text)
+      Studio.emitElementUpdate($element, { text: text })
+    }
+  },
+  
+  onElementCreate: function ($element, elementState) {
+    $element.addClass('clickable')
+    if (elementState.text_color) {
+      $element.css({
+        color: elementState.text_color
+      })
+    }
+  },
+
+  onElementUpdate: function ($element, elementState) {
+    $element.text(elementState.text)
+  }
+}))

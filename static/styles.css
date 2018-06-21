@@ -129,6 +129,13 @@ button:hover {
     cursor: pointer;
     pointer-events: auto;
 }
+.element.clickable {
+    padding: 10px;
+    font-size: 30px;
+    color: white;
+    font-weight: bold;
+    word-break: break-all;
+}
 
 iframe {
     border: 2px solid rgba(0,0,0,0.2);

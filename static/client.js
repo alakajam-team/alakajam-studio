@@ -106,6 +106,16 @@ Studio = (function () {
                     }
                 }
             })
+        interact('.clickable')
+            .on('up', function (event) {
+                $element = $(event.target)
+                for (var pluginName in actionPlugins) {
+                    var plugin = actionPlugins[pluginName]
+                    if (plugin && plugin.watchClickEvents) {
+                        plugin.start($element)
+                    }
+                }
+            });
         
     }
 
@@ -148,7 +158,7 @@ Studio = (function () {
             $element.data('plugins', Object.keys(actions))
             for (var pluginName in actions) {
                 var actionCallback = this._registerAction(actions[pluginName], pluginName, $element)
-                if (typeof actions[pluginName] !== 'boolean') {
+                if (pluginName !== 'drag') {
                     actionsInfo.push({
                         name: pluginName,
                         key: actions[pluginName],

@@ -19,7 +19,7 @@ Studio = (function () {
 
     // Public API
 
-    this.init = function (roomId, sceneSelector, controlsSelector) {
+    this.init = function (roomId, sceneSelector, controlsSelector, clientsSelector) {
         this.socket = io('/?roomId=' + roomId, { transports: ['websocket'] })
         this.socket.on('reconnect_attempt', function () { this.socket.io.opts.transports = ['polling', 'websocket'] })
 
@@ -54,6 +54,10 @@ Studio = (function () {
 
         this.socket.on('state update', function (stateData) {
            self._updateScene(stateData)
+        })
+
+        this.socket.on('clients', function (clients) {
+           $(clientsSelector).text(clients + ' client' + (clients>1?'s':'') + ' online')
         })
     }
 

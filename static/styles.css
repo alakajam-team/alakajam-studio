@@ -121,6 +121,12 @@ button:hover {
     font-size: 20pt;
 }
 
+#clients {
+    float: right;
+    color: gray;
+    margin-right: 10px;
+}
+
 .element {
     pointer-events: none;
     transition: transform 0.1s;

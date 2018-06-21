@@ -55,6 +55,7 @@ loadRooms(rooms => {
     
     socket.join(socketRoom.id)
     socket.emit('init', socketRoom)
+    io.emit('clients', clients)
 
     socket.on('state update', stateData => {
       for (let key in stateData) {
@@ -73,6 +74,7 @@ loadRooms(rooms => {
     socket.on('disconnect', function () {
       clients--
       log(`Client left: ${socket.id}. Total clients: ${clients}`)
+      io.emit('clients', clients)
     })
   })
 

@@ -9,7 +9,8 @@
       <h2>
           <button onclick="$('#controls-container').remove()" title="Alternatively, add ?nocontrols to the URL">X</button>
           <button onclick="$('#controls').toggle()">_</button>
-        Controls
+          <div id="clients"></div>
+        Room controls
       </h2>
       <div id="controls"></div>
     </div>
@@ -33,7 +34,7 @@
         $('#controls-container').remove()
       }
 
-      Studio.init('{{ roomId }}', '#scene', '#controls')
+      Studio.init('{{ roomId }}', '#scene', '#controls', '#clients')
     </script>
   </body>
 </html>

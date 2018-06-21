@@ -97,34 +97,35 @@ Studio = (function () {
                     elementRect: { top: 0.5, left: 0.5, bottom: 0.5, right: 0.5 }
                 },
                 onstart: function (event) {
-                    self._forEachElementPlugin(event, function ($element, plugin) {
+                    self._forEachElementPlugin(event, 'watchDragEvents', function ($element, plugin) {
                         plugin.start($element)
                     })
                 },
                 onmove: function (event) {
-                    self._forEachElementPlugin(event, function ($element, plugin) {
+                    self._forEachElementPlugin(event, 'watchDragEvents', function ($element, plugin) {
                         plugin.update($element, event.dx, event.dy)
                     })
                 },
                 onend: function (event) {
-                    self._forEachElementPlugin(event, function ($element, plugin) {
+                    self._forEachElementPlugin(event, 'watchDragEvents', function ($element, plugin) {
                         plugin.end($element)
                     })
                 },
             })
         interact('.clickable')
             .on('up', function (event) {
-                self._forEachElementPlugin(event, function ($element, plugin) {
+                self._forEachElementPlugin(event, 'watchClickEvents', function ($element, plugin) {
+                    console.log($element, plugin)
                     plugin.start($element)
                 })
             })
     }
 
-    this._forEachElementPlugin = function (event, callback) {
+    this._forEachElementPlugin = function (event, pluginFilter, callback) {
         $element = $(event.target)
         for (var pluginName in actionPlugins) {
             var plugin = actionPlugins[pluginName]
-            if (plugin && plugin.watchDragEvents) {
+            if (plugin && plugin[pluginFilter]) {
                 callback($element, plugin)
             }
         }

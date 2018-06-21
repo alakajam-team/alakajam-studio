@@ -25,7 +25,6 @@ Studio.registerElementPlugin(new ElementPlugin({
     name: 'image',
 
     onElementCreate: function ($element, elementData) {
-        console.log(elementData.id)
         _getPictureSize(elementData.path, function (width, height) {
             $element.css({
                 'background-image': 'url(' + elementData.path + ')',

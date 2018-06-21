@@ -22,12 +22,6 @@
             "z": 2
         },
         {
-            "id": "bg-tvset-desk",
-            "type": "background",
-            "path": "/images/bg-tvset-desk.png",
-            "z": 100
-        },
-        {
             "id": "bg-iframe",
             "type": "iframe",
             "path": "https://alakajam.com/article/docs",
@@ -35,11 +29,20 @@
             "height": 216,
             "init_x": 420,
             "init_y": 61,
-            "z": 101,
+            "z": 3,
             "actions": {
                 "toggle": "<",
                 "editurl": true
             }
+        },
+        {
+            "id": "bg-tvset-desk",
+            "path": "/images/bg-tvset-desk.png",
+            "z": 100,
+            "init_x": 857,
+            "init_y": 300,
+            "width": 380,
+            "height": 240
         },
 
         {

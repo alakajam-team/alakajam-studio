@@ -86,6 +86,7 @@ Studio = (function () {
             'height': data.height + 'px'
         })
 
+        console.log(data.elements)
         data.elements.forEach(function (elementData) {
             elements[elementData.id] = self._createElement(elementData)
         })

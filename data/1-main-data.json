@@ -16,10 +16,30 @@
             "z": 1
         },
         {
+            "id": "bg-tvset-akj3",
+            "type": "background",
+            "path": "/images/bg-tvset-akj3.png",
+            "z": 2
+        },
+        {
             "id": "bg-tvset-desk",
             "type": "background",
             "path": "/images/bg-tvset-desk.png",
             "z": 100
+        },
+        {
+            "id": "bg-iframe",
+            "type": "iframe",
+            "path": "https://alakajam.com/article/docs",
+            "width": 440,
+            "height": 216,
+            "init_x": 420,
+            "init_y": 61,
+            "z": 101,
+            "actions": {
+                "toggle": "<",
+                "editurl": true
+            }
         },
 
         {
@@ -29,7 +49,7 @@
             "tooltip_pinned": true,
             "width": 130,
             "height": 130,
-            "z": 10,
+            "z": 150,
             "actions": {
                 "drag": true,
                 "toggle": "/",
@@ -43,7 +63,7 @@
             "tooltip": "Alone in Space",
             "width": 90,
             "height": 120,
-            "z": 20,
+            "z": 150,
             "actions": {
                 "drag": true,
                 "toggle": "1",
@@ -56,7 +76,7 @@
             "tooltip": "Everything is Edible",
             "width": 90,
             "height": 120,
-            "z": 20,
+            "z": 150,
             "actions": {
                 "drag": true,
                 "toggle": "2",
@@ -69,7 +89,7 @@
             "tooltip": "Always Growing",
             "width": 110,
             "height": 120,
-            "z": 20,
+            "z": 150,
             "actions": {
                 "drag": true,
                 "toggle": "3",
@@ -82,7 +102,7 @@
             "tooltip": "No UI",
             "width": 90,
             "height": 120,
-            "z": 20,
+            "z": 150,
             "actions": {
                 "drag": true,
                 "toggle": "4",
@@ -95,7 +115,7 @@
             "tooltip": "Repair",
             "width": 90,
             "height": 120,
-            "z": 20,
+            "z": 150,
             "actions": {
                 "drag": true,
                 "toggle": "5",
@@ -108,7 +128,7 @@
             "tooltip": "Dangerous Science",
             "width": 90,
             "height": 120,
-            "z": 20,
+            "z": 150,
             "actions": {
                 "drag": true,
                 "toggle": "6",
@@ -121,7 +141,7 @@
             "tooltip": "Thievery",
             "width": 90,
             "height": 120,
-            "z": 20,
+            "z": 150,
             "actions": {
                 "drag": true,
                 "toggle": "7",
@@ -134,7 +154,7 @@
             "tooltip": "Buying Your Time",
             "width": 90,
             "height": 120,
-            "z": 20,
+            "z": 150,
             "actions": {
                 "drag": true,
                 "toggle": "8",
@@ -147,7 +167,7 @@
             "tooltip": "Trash and Treasure",
             "width": 90,
             "height": 120,
-            "z": 20,
+            "z": 150,
             "actions": {
                 "drag": true,
                 "toggle": "9",
@@ -160,7 +180,7 @@
             "tooltip": "Weird Weapon",
             "width": 110,
             "height": 120,
-            "z": 20,
+            "z": 150,
             "actions": {
                 "drag": true,
                 "toggle": "0",

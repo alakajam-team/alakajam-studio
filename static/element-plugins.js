@@ -110,7 +110,7 @@ Studio.registerElementPlugin(new ElementPlugin({
             'min-width': widthWithUnit,
             'min-height': heightWithUnit
         })
-        $element.append('<iframe src="' + elementData.path + '" \
+        $element.append('<iframe src="' + elementData.path + '" scrolling="no" \
             width="' + widthWithUnit + '" height="' + heightWithUnit + '" />')
     }
 }))

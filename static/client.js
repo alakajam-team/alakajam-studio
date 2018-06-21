@@ -96,27 +96,38 @@ Studio = (function () {
                     restriction: 'parent',
                     elementRect: { top: 0.5, left: 0.5, bottom: 0.5, right: 0.5 }
                 },
+                onstart: function (event) {
+                    self._forEachElementPlugin(event, function ($element, plugin) {
+                        plugin.start($element)
+                    })
+                },
                 onmove: function (event) {
-                    $element = $(event.target)
-                    for (var pluginName in actionPlugins) {
-                        var plugin = actionPlugins[pluginName]
-                        if (plugin && plugin.watchDragEvents) {
-                            plugin.update($element, event.dx, event.dy)
-                        }
-                    }
-                }
+                    self._forEachElementPlugin(event, function ($element, plugin) {
+                        plugin.update($element, event.dx, event.dy)
+                    })
+                },
+                onend: function (event) {
+                    self._forEachElementPlugin(event, function ($element, plugin) {
+                        plugin.end($element)
+                    })
+                },
             })
         interact('.clickable')
             .on('up', function (event) {
-                $element = $(event.target)
-                for (var pluginName in actionPlugins) {
-                    var plugin = actionPlugins[pluginName]
-                    if (plugin && plugin.watchClickEvents) {
-                        plugin.start($element)
-                    }
-                }
-            });
-        
+                self._forEachElementPlugin(event, function ($element, plugin) {
+                    plugin.start($element)
+                })
+            })
+    }
+
+    this._forEachElementPlugin = function (event, callback) {
+        $element = $(event.target)
+        for (var pluginName in actionPlugins) {
+            var plugin = actionPlugins[pluginName]
+            if (plugin && plugin.watchDragEvents) {
+                callback($element, plugin)
+            }
+        }
     }
 
     this._updateScene = function (state) {

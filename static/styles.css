@@ -125,12 +125,14 @@ button:hover {
     pointer-events: none;
     transition: transform 0.1s;
 }
-.element.draggable {
+.element iframe {
+    pointer-events: none;
+}
+.element.draggable, .element.clickable {
     cursor: pointer;
     pointer-events: auto;
 }
 .element.clickable {
-    padding: 10px;
     font-size: 30px;
     color: white;
     font-weight: bold;

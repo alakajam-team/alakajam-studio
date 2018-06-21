@@ -105,7 +105,10 @@ Studio.registerActionPlugin(new ActionPlugin({
         'left': left + 'px',
         'top': top + 'px'
       })
-      Studio.emitElementUpdate($element, { x: left, y: top })
+      Studio.emitElementUpdate($element, {
+        x: left,
+        y: top
+      })
     }
   },
 
@@ -188,7 +191,6 @@ function _refreshZoom($element) {
   })
 }
 
-
 // Set text plugin
 
 Studio.registerActionPlugin(new ActionPlugin({
@@ -214,5 +216,28 @@ Studio.registerActionPlugin(new ActionPlugin({
 
   onElementUpdate: function ($element, elementState) {
     $element.text(elementState.text)
+  }
+}))
+
+// Set URL plugin for iframes
+
+Studio.registerActionPlugin(new ActionPlugin({
+  name: 'editurl',
+  watchClickEvents: true,
+
+  start: function ($element) {
+    var url = prompt("Enter the new URL", $element.text())
+    if (url !== null) {
+      $('iframe', $element).attr('src', url)
+      Studio.emitElementUpdate($element, { url: url })
+    }
+  },
+  
+  onElementCreate: function ($element) {
+    $element.addClass('clickable')
+  },
+
+  onElementUpdate: function ($element, elementState) {
+    $('iframe', $element).attr('src', elementState.url)
   }
 }))

@@ -226,7 +226,7 @@ Studio.registerActionPlugin(new ActionPlugin({
   watchClickEvents: true,
 
   start: function ($element) {
-    var url = prompt("Enter the new URL", $element.text())
+    var url = prompt("Enter the new URL", $('iframe', $element).attr('src'))
     if (url !== null) {
       $('iframe', $element).attr('src', url)
       Studio.emitElementUpdate($element, { url: url })

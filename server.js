@@ -49,6 +49,10 @@ loadRooms(rooms => {
     log(`Client joined: ${socket.id}. Total clients: ${clients}`)
 
     let socketRoom = rooms[socket.handshake.query.roomId]
+    if (!socketRoom) {
+      return // Wrong room!
+    }
+    
     socket.join(socketRoom.id)
     socket.emit('init', socketRoom)
 

@@ -115,7 +115,6 @@ Studio = (function () {
         interact('.clickable')
             .on('up', function (event) {
                 self._forEachElementPlugin(event, 'watchClickEvents', function ($element, plugin) {
-                    console.log($element, plugin)
                     plugin.start($element)
                 })
             })
@@ -123,12 +122,12 @@ Studio = (function () {
 
     this._forEachElementPlugin = function (event, pluginFilter, callback) {
         $element = $(event.target)
-        for (var pluginName in actionPlugins) {
+        $element.data('plugins').forEach(function (pluginName) {
             var plugin = actionPlugins[pluginName]
             if (plugin && plugin[pluginFilter]) {
                 callback($element, plugin)
             }
-        }
+        })
     }
 
     this._updateScene = function (state) {

@@ -125,10 +125,10 @@
         },
 
         {
-            "id": "icon-alone",
-            "path": "/images/icon-alone.png",
-            "tooltip": "Alone in Space",
-            "width": 90,
+            "id": "icon-growing",
+            "path": "/images/icon-growing.png",
+            "tooltip": "Always Growing",
+            "width": 110,
             "height": 120,
             "z": 150,
             "actions": {
@@ -138,9 +138,9 @@
             }
         },
         {
-            "id": "icon-edible",
-            "path": "/images/icon-edible.png",
-            "tooltip": "Everything is Edible",
+            "id": "icon-alone",
+            "path": "/images/icon-alone.png",
+            "tooltip": "Alone in Space",
             "width": 90,
             "height": 120,
             "z": 150,
@@ -151,42 +151,16 @@
             }
         },
         {
-            "id": "icon-growing",
-            "path": "/images/icon-growing.png",
-            "tooltip": "Always Growing",
-            "width": 110,
+            "id": "icon-time",
+            "path": "/images/icon-time.png",
+            "tooltip": "Buying Your Time",
+            "width": 90,
             "height": 120,
             "z": 150,
             "actions": {
                 "drag": true,
                 "toggle": "3",
                 "zoom": "E"
-            }
-        },
-        {
-            "id": "icon-noui",
-            "path": "/images/icon-noui.png",
-            "tooltip": "No UI",
-            "width": 90,
-            "height": 120,
-            "z": 150,
-            "actions": {
-                "drag": true,
-                "toggle": "4",
-                "zoom": "R"
-            }
-        },
-        {
-            "id": "icon-repair",
-            "path": "/images/icon-repair.png",
-            "tooltip": "Repair",
-            "width": 90,
-            "height": 120,
-            "z": 150,
-            "actions": {
-                "drag": true,
-                "toggle": "5",
-                "zoom": "T"
             }
         },
         {
@@ -198,14 +172,40 @@
             "z": 150,
             "actions": {
                 "drag": true,
+                "toggle": "4",
+                "zoom": "R"
+            }
+        },
+        {
+            "id": "icon-edible",
+            "path": "/images/icon-edible.png",
+            "tooltip": "Everything is Edible",
+            "width": 90,
+            "height": 120,
+            "z": 150,
+            "actions": {
+                "drag": true,
+                "toggle": "5",
+                "zoom": "T"
+            }
+        },
+        {
+            "id": "icon-noui",
+            "path": "/images/icon-noui.png",
+            "tooltip": "No UI",
+            "width": 90,
+            "height": 120,
+            "z": 150,
+            "actions": {
+                "drag": true,
                 "toggle": "6",
                 "zoom": "Y"
             }
         },
         {
-            "id": "icon-thievery",
-            "path": "/images/icon-thievery.png",
-            "tooltip": "Thievery",
+            "id": "icon-repair",
+            "path": "/images/icon-repair.png",
+            "tooltip": "Repair",
             "width": 90,
             "height": 120,
             "z": 150,
@@ -216,9 +216,9 @@
             }
         },
         {
-            "id": "icon-time",
-            "path": "/images/icon-time.png",
-            "tooltip": "Buying Your Time",
+            "id": "icon-thievery",
+            "path": "/images/icon-thievery.png",
+            "tooltip": "Thievery",
             "width": 90,
             "height": 120,
             "z": 150,

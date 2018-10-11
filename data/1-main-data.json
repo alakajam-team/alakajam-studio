@@ -81,18 +81,20 @@
             "z": 10,
             "actions": {
                 "drag": true,
-                "talk": "C"
+                "talk": "C",
+                "toggle": ")"
             }
         },
         {
-            "id": "chara-dollarone",
-            "path": "/images/chara-dollarone.gif",
-            "tooltip": "Dollarone",
+            "id": "chara-tipyx",
+            "path": "/images/chara-tipyx.png",
+            "tooltip": "Tipyx",
             "tooltip_pinned": true,
             "z": 10,
             "actions": {
                 "drag": true,
-                "talk": "V"
+                "talk": "V",
+                "toggle": "="
             }
         },
         {

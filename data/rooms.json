@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "title": "Room #1: 3rd Alakajam! Opening Ceremony",
+        "title": "Room #1: TV Studio",
         "data_path": "1-main-data.json",
         "state_path": "1-main-state.json"
     },
